@@ -49,6 +49,15 @@ const DuckDBTable = ({
       // Web WorkerのURLを解放
       URL.revokeObjectURL(worker_url);
 
+      const streamResponse = await fetch(jsonFileURL);
+      // parse json
+      let json = await streamResponse.json();
+      if (jsonPreprocessor) {
+        json = jsonPreprocessor(json);
+      }
+
+      await db.registerFileText("res.json", JSON.stringify(json));
+
       setDb(db);
     } catch (err) {
       setError(`Error initializing DuckDB: ${(err as Error).message}`);
@@ -60,14 +69,6 @@ const DuckDBTable = ({
 
     setLoading(true);
     try {
-      const streamResponse = await fetch(jsonFileURL);
-      // parse json
-      let json = await streamResponse.json();
-      if (jsonPreprocessor) {
-        json = jsonPreprocessor(json);
-      }
-
-      await db.registerFileText("res.json", JSON.stringify(json));
       const conn = await db.connect();
 
       // Query
