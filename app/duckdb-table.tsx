@@ -1,10 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import * as duckdb from "@duckdb/duckdb-wasm";
 import * as arrow from "apache-arrow";
+import { useEffect, useState } from "react";
 
 const JSDELIVR_BUNDLES = duckdb.getJsDelivrBundles();
 const { DuckDBDataProtocol } = duckdb;
